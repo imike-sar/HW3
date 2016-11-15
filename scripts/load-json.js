@@ -1,15 +1,14 @@
-function loadJSON(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
+export function loadJSON(url) {
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState != 4) return ;
+  return new Promise(function(resolve) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
 
-    if (xhr.status != 200) {
-    } else {
-      callback(JSON.parse(xhr.responseText));
-    }
-  }
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState !== 4) return;
+      if (xhr.status === 200) resolve(JSON.parse(xhr.responseText));
+    };
 
-  xhr.send();
+    xhr.send();
+  });
 }
